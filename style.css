@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+:root {
+  --square-size: 70px;
+}
+
+body,
+button {
+  font-family: Montserrat, sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+.tickets-grid {
+  display: grid;
+  column-gap: 5px;
+  row-gap: 5px;
+  margin: auto;
+}
+
+.tickets-grid div,
+.legend-row div {
+  border-radius: 5px;
+  height: auto;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  height: var(--square-size);
+}
+
+.seat {
+  background-color: aqua;
+  cursor: pointer;
+  font-weight: bold;
+  position: relative;
+}
+
+.seat:hover i {
+  display: block;
+}
+
+.seat i {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.seat i:hover {
+  color: red;
+}
+
+.driver,
+.door {
+  background-color: gray;
+}
+
+.driver i,
+.door i {
+  color: white;
+}
+
+.seat:hover {
+  background-color: aquamarine;
+}
+
+.empty {
+  background-color: aqua;
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.empty i {
+  display: none;
+  color: white;
+  opacity: 0.9;
+  font-size: 40px;
+}
+
+.empty:hover i {
+  display: block;
+}
+
+.button-left,
+.button-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-left i,
+.button-right i {
+  margin: 20px 5px;
+}
+
+.button-down i {
+  margin: 5px 20px;
+}
+
+.button-left i,
+.button-right i,
+.button-down i {
+  font-size: 40px;
+  color: white;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.button-left,
+.button-right,
+.button-down {
+  background-color: #11d0e944;
+}
+
+.button-left {
+  height: auto !important;
+}
+
+.button-right {
+  height: auto !important;
+}
+
+.button-down {
+  height: var(--square-size);
+}
+
+.button-right:hover,
+.button-left:hover,
+.button-down:hover {
+  background-color: #11d0e999;
+}
+
+#save-seats {
+  display: block;
+  margin: 20px auto;
+  padding: 15px 20px 15px 20px;
+  font-weight: bold;
+  width: auto;
+  color: white;
+  border: none;
+  cursor: pointer;
+  background-color: cyan;
+  text-transform: uppercase;
+}
+
+#save-seats:hover {
+  filter: brightness(115%);
+}
+
+#save-seats:active {
+  transform: translateY(5px);
+}
+
+#save-seats:focus {
+  outline: none;
+}
+
+.legend-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.legend-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.legend-row div {
+  cursor: initial;
+  width: var(--square-size);
+  margin-right: 15px;
+}

@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tickets Sample</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+      rel="icon"
+      type="image/png"
+      href="http://www.google.com/s2/favicons?domain=carlosshb.com"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
+    />
+</head>
+<body>
+    <h1>Tickets</h1>
+    <div class="tickets-grid">
+    </div>
+    <button id="save-seats">Save seats</button>
+    <div class="legend-container">
+      <h2>Legend</h2>
+      <div class="legend-row">
+        <div class="seat"></div>
+        Seat (can become empty seat)
+      </div>
+      <div class="legend-row">
+        <div class="empty"></div>
+        Empty seat (can become active seat)
+      </div>
+      <div class="legend-row">
+        <div class="door"></div>
+        Blocked seat (hall)
+      </div>
+      <div class="legend-row">
+        <div class="driver">
+          <i class="fas fa-user"></i>
+        </div>
+        Driver
+      </div>
+      <div class="legend-row">
+        <div class="driver">
+          <i class="fas fa-door-open"></i>
+        </div>
+        Door
+      </div>
+    </div>
+</body>
+<script src="script.js"></script>
+
+</html>
