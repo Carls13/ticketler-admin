@@ -11,6 +11,7 @@ button {
 
 h1 {
   text-align: center;
+  margin-bottom: 50px;
 }
 
 .tickets-grid {
@@ -36,32 +37,70 @@ h1 {
   background-color: aqua;
   cursor: pointer;
   font-weight: bold;
+}
+
+.seat,
+.door,
+.driver,
+.hall,
+.premium,
+.bath,
+.stairs {
   position: relative;
 }
 
-.seat:hover i {
+.seat:hover i,
+.door:hover .fa-minus-circle,
+.driver:hover .fa-minus-circle,
+.hall:hover .fa-minus-circle,
+.premium:hover .fa-minus-circle,
+.stairs:hover .fa-minus-circle,
+.bath:hover .fa-minus-circle {
   display: block;
 }
 
-.seat i {
+.seat i,
+.door .fa-minus-circle,
+.driver .fa-minus-circle,
+.hall .fa-minus-circle,
+.premium .fa-minus-circle,
+.stairs .fa-minus-circle,
+.bath .fa-minus-circle {
   display: none;
   position: absolute;
   top: 0;
   right: 0;
 }
 
-.seat i:hover {
+.seat i:hover,
+.door .fa-minus-circle:hover,
+.driver .fa-minus-circle:hover,
+.hall .fa-minus-circle:hover,
+.premium .fa-minus-circle:hover,
+.stairs .fa-minus-circle:hover,
+.bath .fa-minus-circle:hover {
   color: red;
 }
 
 .driver,
-.door {
+.door,
+.stairs,
+.bath,
+.hall {
   background-color: gray;
 }
 
-.driver i,
-.door i {
+.premium {
+  background-color: goldenrod;
+}
+
+.driver i:nth-child(1),
+.door i:nth-child(1),
+.stairs i:nth-child(1),
+.premium i:nth-child(1),
+.bath i:nth-child(1) {
   color: white;
+  font-size: 25px;
 }
 
 .seat:hover {
@@ -72,17 +111,41 @@ h1 {
   background-color: aqua;
   opacity: 0.4;
   cursor: pointer;
+  position: relative;
 }
 
-.empty i {
+.show-toolbar {
+  opacity: 1;
+}
+
+.empty .toolbar {
   display: none;
-  color: white;
-  opacity: 0.9;
-  font-size: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  position: absolute;
+  top: -30px;
+  width: auto;
+  gap: 10px;
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 }
 
-.empty:hover i {
-  display: block;
+.show-toolbar .toolbar {
+  display: flex;
+}
+
+.toolbar i {
+  font-size: 25px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.toolbar i:hover {
+  color: aqua;
 }
 
 .button-left,
