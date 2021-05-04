@@ -510,8 +510,6 @@ function paintGrid() {
 function saveSeats() {
     console.log({
         seats: floorData.seats,
-        columns,
-        rows
     });
 
     // Save somewhere...
