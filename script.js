@@ -556,10 +556,22 @@ function saveSeats() {
         ]
     }, []);
 
-    console.log({
-        seats: finalData
-    });
     // Save somewhere...
+    saveButton.disabled = true;
+
+    // MODIFY BACKEND URL HERE
+    const BACKEND_URI = "https://google.com";
+
+    fetch(BACKEND_URI, {
+        method: "POST",
+        body: JSON.stringify({ seats: finalData })
+    }).then(() => {
+        alert("La petición se ha enviado con éxito.");
+        saveButton.disabled = false;
+    }).catch(() => {
+        alert("Error al enviar la petición.");
+        saveButton.disabled = false;
+    })
 }
 
 paintGrid();
