@@ -21,6 +21,14 @@ h1 {
   margin: auto;
 }
 
+.row {
+  display: flex;
+}
+
+.tickets-container {
+  width: 75%;
+}
+
 .tickets-grid div,
 .legend-row div {
   border-radius: 5px;
@@ -222,17 +230,15 @@ h1 {
 }
 
 .legend-container {
-  width: 100%;
+  width: 25%;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .legend-row {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
   margin: 10px 0;
 }
 
@@ -240,4 +246,37 @@ h1 {
   cursor: initial;
   width: var(--square-size);
   margin-right: 15px;
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  margin: 15px auto;
+  width: 250px;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  width: 125px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: aqua;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #11d0e999;
 }

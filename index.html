@@ -1,9 +1,9 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tickets Sample</title>
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticketler Admin</title>
+    <link rel="stylesheet" href="style.css" />
     <link
       rel="icon"
       type="image/png"
@@ -13,40 +13,74 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
     />
-</head>
-<body>
+  </head>
+  <body>
     <h1>Tickets</h1>
-    <div class="tickets-grid">
-    </div>
-    <button id="save-seats">Save seats</button>
-    <div class="legend-container">
-      <h2>Legend</h2>
-      <div class="legend-row">
-        <div class="seat"></div>
-        Seat (can become empty seat)
-      </div>
-      <div class="legend-row">
-        <div class="empty"></div>
-        Empty seat (can become active seat)
-      </div>
-      <div class="legend-row">
-        <div class="door"></div>
-        Blocked seat (hall)
-      </div>
-      <div class="legend-row">
-        <div class="driver">
-          <i class="fas fa-user"></i>
-        </div>
-        Driver
-      </div>
-      <div class="legend-row">
-        <div class="driver">
-          <i class="fas fa-door-open"></i>
-        </div>
-        Door
-      </div>
-    </div>
-</body>
-<script src="script.js"></script>
 
+    <div class="row">
+      <div class="tickets-container">
+        <!-- Tab links -->
+        <div class="tab">
+          <button
+            id="floor-1"
+            class="tablinks active"
+            onclick="changeCurrentFloor(1)"
+          >
+            Piso 1
+          </button>
+          <button id="floor-2" class="tablinks" onclick="changeCurrentFloor(2)">
+            Piso 2
+          </button>
+        </div>
+        <div class="tickets-grid"></div>
+        <button id="save-seats">Guardar bus</button>
+      </div>
+      <div class="legend-container">
+        <h2>Leyenda</h2>
+        <div class="legend-row">
+          <div class="seat"></div>
+          Asiento
+        </div>
+        <div class="legend-row">
+          <div class="empty"></div>
+          Asiento vacío
+        </div>
+        <div class="legend-row">
+          <div class="door"></div>
+          Pasillo
+        </div>
+        <div class="legend-row">
+          <div class="driver">
+            <i class="fas fa-user"></i>
+          </div>
+          Conductor
+        </div>
+        <div class="legend-row">
+          <div class="driver">
+            <i class="fas fa-door-open"></i>
+          </div>
+          Puerta
+        </div>
+        <div class="legend-row">
+          <div class="premium">
+            <i class="fas fa-star"></i>
+          </div>
+          Premium
+        </div>
+        <div class="legend-row">
+          <div class="bath">
+            <i class="fas fa-toilet"></i>
+          </div>
+          Baño
+        </div>
+        <div class="legend-row">
+          <div class="stairs">
+            <i class="fas fa-layer-group"></i>
+          </div>
+          Escaleras
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
 </html>

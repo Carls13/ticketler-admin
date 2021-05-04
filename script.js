@@ -1,30 +1,46 @@
 const gridElement = document.querySelector(".tickets-grid");
 const saveButton = document.getElementById("save-seats");
 
-let rows = 2;
-let columns = 2;
-
 // Square size in px
 const SQUARE_SIZE = 70;
 
 const root = document.documentElement;
 
-// Create rows and columns array
-function createSeatsMap() {
-    // Calculate seats
-    const seats = new Array(rows * columns);
+// Current active floor
+let activeFloor = 1;
 
-    const chunkedSeats = chunkArray(seats, columns);
+let busData = {
+    floor1: {
+        rows: 2,
+        columns: 2,
+        seats: [],
+        seatsData: []
+    },
+    floor2: {
+        rows: 2,
+        columns: 2,
+        seats: [],
+        seatsData: []
+    }
+};
+
+// Create rows and columns array
+function createSeatsMap(floor) {
+    // Calculate seats
+    const seats = new Array(busData["floor" + floor].rows * busData["floor" + floor].columns);
+
+    const chunkedSeats = chunkArray(seats, busData["floor" + floor].columns);
 
     return chunkedSeats;
 }
 
-let seats = createSeatsMap();
+busData.floor1.seats = createSeatsMap(1);
+busData.floor2.seats = createSeatsMap(2);
 
 // Create array with detail of each seat
-function createSeatsData(first = false) {
+function createSeatsData(floor) {
     let data = [];
-    seats.forEach((seatRow, i) => {
+    busData["floor" + floor].seats.forEach((seatRow, i) => {
         seatRow.forEach((seat, j) => {
             // return empty seat
             data.push({
@@ -38,13 +54,12 @@ function createSeatsData(first = false) {
     return data;
 }
 
-let floorData = {
-    seats: createSeatsData()
-};
+busData.floor1.seatsData = createSeatsData(1);
+busData.floor2.seatsData = createSeatsData(2);
 
 // Gets type of the seat
 function getSeatInfo(i, j) {
-    const targetSeat = floorData.seats.find((seat) => seat.row === i && seat.column === j);
+    const targetSeat = busData["floor" + activeFloor].seatsData.find((seat) => seat.row === i && seat.column === j);
 
     return targetSeat?.seat_type;
 }
@@ -52,7 +67,7 @@ function getSeatInfo(i, j) {
 // Modify seat status
 function modifySeatStatus(i, j, status) {
     // Map through all the data
-    const newData = floorData.seats.map((seat) => {
+    const newData = busData["floor" + activeFloor].seatsData.map((seat) => {
         if (seat.row === i + 1 && seat.column === j + 1) {
             return {
                 ...seat,
@@ -63,28 +78,12 @@ function modifySeatStatus(i, j, status) {
     });
 
     // Assign new data
-    floorData.seats = newData;
-}
-
-// Create array with detail of each seat
-function createSeatsData() {
-    let data = [];
-    seats.forEach((seatRow, i) => {
-        seatRow.forEach((seat, j) => {
-            // return empty seat
-            data.push({
-                row: i + 1,
-                column: j + 1,
-                seat_type: "empty"
-            })
-        });
-    });
-
-    return data;
+    busData["floor" + activeFloor].seatsData = newData;
 }
 
 // update array with detail of each seat
 function updateSeatsDataOnDimensionsChange() {
+    const { seats } = busData["floor" + activeFloor];
     let data = [];
     seats.forEach((seatRow, i) => {
         seatRow.forEach((seat, j) => {
@@ -97,7 +96,22 @@ function updateSeatsDataOnDimensionsChange() {
         });
     });
 
-    floorData.seats = data;
+    busData["floor" + activeFloor].seatsData = data;
+}
+
+// Change floor
+function changeCurrentFloor(newFloor) {
+    // Remove active class from old button
+    const oldButton = document.getElementById("floor-" + activeFloor);
+    oldButton.classList.remove("active");
+
+    // Add active class to new button
+    const newButton = document.getElementById("floor-" + newFloor);
+    newButton.classList.add("active");
+
+    activeFloor = newFloor;
+
+    paintGrid();
 }
 
 // Convert array into array of arrays
@@ -366,7 +380,23 @@ function drawEmptySeat(i, j, seatContainer) {
     // Append toolbox 
     seatContainer.appendChild(getToolBar(i, j));
 
+    document.addEventListener('click', function (event) {
+        const isClickInside = seatContainer.contains(event.target);
+
+        if (!isClickInside) {
+            seatContainer.classList.remove("show-toolbar");
+        }
+    });
+
     seatContainer.addEventListener('click', () => {
+        // Hide any other open toolbars
+        const emptySeats = document.getElementsByClassName("empty");
+
+        Array.from(emptySeats).forEach((seat) => {
+            if (seat.id !== `${i}-${j}`) seat.classList.remove("show-toolbar");
+        });
+
+        // Show toolbar
         seatContainer.classList.toggle("show-toolbar");
     });
 }
@@ -374,6 +404,7 @@ function drawEmptySeat(i, j, seatContainer) {
 
 // Draw right button
 function drawRightButton() {
+    const { columns, rows } = busData["floor" + activeFloor];
     const rightButton = document.createElement("div");
     rightButton.className = "button-right";
     rightButton.style.gridColumn = `${columns + 1}`;
@@ -382,13 +413,13 @@ function drawRightButton() {
     const rightArrow = document.createElement("i");
     rightArrow.className = "fas fa-arrow-right";
     rightArrow.setAttribute("onclick", `modifyColumns(1)`);
-    rightArrow.title = "Add column to the right";
+    rightArrow.title = "Agregar 1 columna";
 
     const leftArrow = document.createElement("i");
     leftArrow.className = "fas fa-arrow-left";
     leftArrow.hidden = columns === 1;
     leftArrow.setAttribute("onclick", `modifyColumns(-1)`);
-    leftArrow.title = "Remove column";
+    leftArrow.title = "Remover 1 columna";
 
     rightButton.append(rightArrow, leftArrow);
     gridElement.append(rightButton);
@@ -396,6 +427,7 @@ function drawRightButton() {
 
 // Draw down button
 function drawDownButton() {
+    const { columns, rows } = busData["floor" + activeFloor];
     const downButton = document.createElement("div");
     downButton.className = "button-down";
     downButton.style.gridColumn = `1 / span ${columns}`;
@@ -404,13 +436,13 @@ function drawDownButton() {
     const downArrow = document.createElement("i");
     downArrow.className = "fas fa-arrow-down";
     downArrow.setAttribute("onclick", `modifyRows(1)`);
-    downArrow.title = "Add 1 row";
+    downArrow.title = "Agregar 1 fila";
 
     const upArrow = document.createElement("i");
     upArrow.className = "fas fa-arrow-up";
     upArrow.hidden = rows === 6;
     upArrow.setAttribute("onclick", `modifyRows(-1)`);
-    upArrow.title = "Remove 1 row";
+    upArrow.title = "Remover 1 fila";
 
     downButton.append(downArrow, upArrow);
     gridElement.append(downButton);
@@ -418,18 +450,20 @@ function drawDownButton() {
 
 // Increase/Dicrease columns
 function modifyColumns(amount) {
-    columns += amount;
+    if (amount < 0 && busData['floor' + activeFloor].columns === 2) return;
+    busData['floor' + activeFloor].columns += amount;
 
-    seats = createSeatsMap();
+    busData['floor' + activeFloor].seats = createSeatsMap(activeFloor);
     updateSeatsDataOnDimensionsChange();
     paintGrid();
 }
 
 // Increase/Dicrease rows
 function modifyRows(amount) {
-    rows += amount;
+    if (amount < 0 && busData['floor' + activeFloor].rows === 2) return;
+    busData['floor' + activeFloor].rows += amount;
 
-    seats = createSeatsMap();
+    busData['floor' + activeFloor].seats = createSeatsMap(activeFloor);
     updateSeatsDataOnDimensionsChange();
     paintGrid();
 }
@@ -444,6 +478,8 @@ function drawButtons() {
 function paintGrid() {
     // Reset grid
     gridElement.textContent = "";
+
+    const { seats, columns } = busData["floor" + activeFloor];
 
     // Style grid depending on columns
     gridElement.style.gridTemplateColumns = `repeat(${columns + 1}, ${SQUARE_SIZE}px)`;
@@ -508,10 +544,21 @@ function paintGrid() {
 
 // Save seats info
 function saveSeats() {
-    console.log({
-        seats: floorData.seats,
-    });
+    const finalData = Object.keys(busData).reduce((currentData, newFloor, i) => {
+        return [
+            ...currentData,
+            ...busData[newFloor].seatsData.map((seat) => {
+                return {
+                    ...seat,
+                    floor: i + 1
+                };
+            })
+        ]
+    }, []);
 
+    console.log({
+        seats: finalData
+    });
     // Save somewhere...
 }
 
