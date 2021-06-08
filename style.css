@@ -43,7 +43,6 @@ h1 {
 
 .seat {
   background-color: aqua;
-  cursor: pointer;
   font-weight: bold;
 }
 
@@ -102,6 +101,7 @@ h1 {
   background-color: goldenrod;
 }
 
+.seat i:nth-child(1),
 .driver i:nth-child(1),
 .door i:nth-child(1),
 .stairs i:nth-child(1),
@@ -174,7 +174,7 @@ h1 {
 .button-left i,
 .button-right i,
 .button-down i {
-  font-size: 40px;
+  font-size: 25px;
   color: white;
   opacity: 0.9;
   cursor: pointer;
@@ -184,14 +184,6 @@ h1 {
 .button-right,
 .button-down {
   background-color: #11d0e944;
-}
-
-.button-left {
-  height: auto !important;
-}
-
-.button-right {
-  height: auto !important;
 }
 
 .button-down {
@@ -262,13 +254,21 @@ h1 {
 /* Style the buttons that are used to open the tab content */
 .tab button {
   background-color: inherit;
-  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   border: none;
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
   width: 125px;
+}
+
+.tab i {
+  display: none;
+  color: red;
 }
 
 /* Change background color of buttons on hover */
